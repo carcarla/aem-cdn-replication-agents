@@ -1,4 +1,4 @@
-package com.carz.aem.cdn.replication.akamai;
+package carz.aem.cdn.replication.akamai;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
-import com.carz.aem.cdn.replication.constants.TransportConstants;
+import carz.aem.cdn.replication.constants.TransportConstants;
 import com.day.cq.replication.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;

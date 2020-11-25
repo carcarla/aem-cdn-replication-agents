@@ -16,27 +16,11 @@
                     xtype="cqinclude"/>
                 <tab3
                     jcr:primaryType="cq:Widget"
-                    path="/libs/cq/replication/components/agent/tab_proxy.infinity.json"
+                    path="/libs/cq/replication/components/agent/tab_triggers.infinity.json"
                     xtype="cqinclude"/>
                 <tab4
                     jcr:primaryType="cq:Widget"
-                    path="/libs/cq/replication/components/agent/tab_extended.infinity.json"
-                    xtype="cqinclude"/>
-                <tab5
-                    jcr:primaryType="cq:Widget"
-                    path="/libs/cq/replication/components/agent/tab_triggers.infinity.json"
-                    xtype="cqinclude"/>
-                <tab6
-                    jcr:primaryType="cq:Widget"
-                    path="/libs/cq/replication/components/agent/tab_batch.infinity.json"
-                    xtype="cqinclude"/>
-                <tab7
-                  jcr:primaryType="cq:Widget"
-                  path="/apps/cq/replication/components/agent/tab_verizon.infinity.json"
-                  xtype="cqinclude"/>
-                <tab8
-                    jcr:primaryType="cq:Widget"
-                    path="/apps/cq/replication/components/agent/tab_akamai.infinity.json"
+                    path="/apps/carz/replication/components/akamai/tab_akamai.infinity.json"
                     xtype="cqinclude"/>
             </items>
         </tabs>

@@ -11,11 +11,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.carz.aem</groupId>
-	<artifactId>cdn</artifactId>
+	<groupId>carz.aem</groupId>
+	<artifactId>carz</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<description>AEM Custom Relication</description>
+	<description>AEM Custom Replication</description>
 
 	<modules>
 		<module>replication</module>
@@ -34,7 +34,7 @@
 		<bnd.version>4.2.0</bnd.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <acn.bundle.version>0.0.1-SNAPSHOT</acn.bundle.version>
+        <carz.bundle.version>0.0.1-SNAPSHOT</carz.bundle.version>
         <akamai.version>4.0.0</akamai.version>
         <google.client.version>1.21.0</google.client.version>
 	</properties>
@@ -598,9 +598,9 @@
             </dependency>
             <!-- Custom bundles -->
 			<dependency>
-				<groupId>com.carz.aem</groupId>
+				<groupId>carz.aem</groupId>
 				<artifactId>cdn.replication</artifactId>
-				<version>${acn.bundle.version}</version>
+				<version>${carz.bundle.version}</version>
 				<scope>provided</scope>
 			</dependency>
 		</dependencies>

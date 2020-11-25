@@ -14,6 +14,6 @@
  *  limitations under the License.
  */
 @Version("1.0")
-package com.carz.aem.cdn.replication;
+package carz.aem.cdn.replication;
 
 import org.osgi.annotation.versioning.Version;

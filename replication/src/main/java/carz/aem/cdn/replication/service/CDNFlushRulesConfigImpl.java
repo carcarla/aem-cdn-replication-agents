@@ -1,4 +1,4 @@
-package com.carz.aem.cdn.replication.service;
+package carz.aem.cdn.replication.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Activate;

@@ -1,4 +1,4 @@
-package com.carz.aem.cdn.replication.service;
+package carz.aem.cdn.replication.service;
 
 import java.util.Map;
 import java.util.regex.Pattern;

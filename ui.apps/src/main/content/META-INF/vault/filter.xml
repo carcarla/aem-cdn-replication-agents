@@ -2,6 +2,6 @@
 <workspaceFilter version="1.0">
     <filter root="/apps/carz" mode="update" />
     <filter root="/apps/cq" mode="update" />
-    <filter root="/etc/replication/agents.author/akamai-flush" mode="update"/>
+    <filter root="/etc/replication/agents.publish/akamai-flush" mode="update"/>
     <filter root="/etc/replication/agents.publish/verizon-flush" mode="update"/>
 </workspaceFilter>

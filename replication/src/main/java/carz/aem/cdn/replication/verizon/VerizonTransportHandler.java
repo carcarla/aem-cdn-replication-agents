@@ -1,4 +1,4 @@
-package com.carz.aem.cdn.replication.verizon;
+package carz.aem.cdn.replication.verizon;
 
 import java.io.BufferedReader;
 import java.io.IOException;

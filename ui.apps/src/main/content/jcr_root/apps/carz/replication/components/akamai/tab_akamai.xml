@@ -25,7 +25,7 @@
             xtype="textfield"/>
         <type
             jcr:primaryType="cq:Widget"
-            defaultValue="arl"
+            defaultValue="url"
             fieldDescription="Selecting &amp;quot;URLs/ARLs&amp;quot; will instruct Akamai to take action on the resources in the activation request. When purging by &amp;quot;CP codes&amp;quot; resources in the activation request are not considered."
             fieldLabel="Type"
             name="./type"

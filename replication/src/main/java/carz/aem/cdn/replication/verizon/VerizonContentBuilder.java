@@ -1,14 +1,23 @@
-package com.carz.aem.cdn.replication.akamai;
+package carz.aem.cdn.replication.verizon;
 
-import com.carz.aem.cdn.replication.service.CDNFlushRules;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import javax.jcr.Session;
+
+import carz.aem.cdn.replication.service.CDNFlushRules;
 import com.day.cq.replication.*;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.sling.api.resource.*;
+
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.sling.api.resource.LoginException;
-import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ResourceResolverFactory;
-import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.apache.sling.jcr.resource.api.JcrResourceConstants;
 import org.apache.sling.settings.SlingSettingsService;
@@ -19,27 +28,17 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jcr.Session;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * Akamai content builder to create replication content containing a JSON array
- * of URLs for Akamai to purge through the Akamai Transport Handler. This class
+ * Verizon content builder to create replication content containing a JSON array
+ * of URLs for Verizon to purge through the Verizon Transport Handler. This class
  * takes the internal resource path and converts it to external URLs as well as
  * adding vanity URLs and pages that may Sling include the activated resource.
  */
 @Component(service = ContentBuilder.class,
   immediate = true,
-  property = {"name=akamai", "service.ranking:Integer=1001"},
+  property = {"name=verizon", "service.ranking:Integer=1001"},
   configurationPolicy = ConfigurationPolicy.REQUIRE)
-public class AkamaiContentBuilder implements ContentBuilder {
+public class VerizonContentBuilder implements ContentBuilder {
 
   @Reference
   private ResourceResolverFactory resolverFactory;
@@ -50,25 +49,27 @@ public class AkamaiContentBuilder implements ContentBuilder {
   @Reference
   private CDNFlushRules cdnFlushRules;
 
-  private static final Logger LOG = LoggerFactory.getLogger(AkamaiContentBuilder.class);
+  private static final Logger LOG = LoggerFactory.getLogger(VerizonContentBuilder.class);
 
   /**
    * The name of the replication agent
    */
-  public static final String NAME = "akamai";
+  public static final String NAME = "verizon";
 
   /**
    * The serialization type as it will display in the replication
    * agent edit dialog selection field.
    */
-  public static final String TITLE = "Akamai Purge Agent";
+  public static final String TITLE = "Verizon Purge Agent";
 
-  private final static String PROPERTY_DOMAIN = "akamaiDomain";
+  private final static String PROPERTY_ACCOUNT_DIRECTORY = "verizonAccountDir";
+  private final static String PROPERTY_DOMAIN = "verizonDomain";
+  private final static String PROPERTY_CACHE_ROOT = "verizonCacheRoot";
   private final static String AUTHOR_RUN_MODE = "author";
 
   private boolean disableFlushWithoutFlushRules = true;
 
-  @ObjectClassDefinition(name = "Akamai content builder config")
+  @ObjectClassDefinition(name = "Verizon content builder config")
   public @interface Config {
 
     @AttributeDefinition(name = "Disable flush without flush rules")
@@ -78,7 +79,7 @@ public class AkamaiContentBuilder implements ContentBuilder {
 
   @Activate
   @Modified
-  protected void activate(final AkamaiContentBuilder.Config config) {
+  protected void activate(final VerizonContentBuilder.Config config) {
     disableFlushWithoutFlushRules = config.disable_flush_without_flush_rules();
   }
 
@@ -93,7 +94,7 @@ public class AkamaiContentBuilder implements ContentBuilder {
 
   /**
    * Create the replication content containing the public facing URLs for
-   * Akamai to purge.
+   * Verizon to purge.
    */
   @Override
   public ReplicationContent create(Session session, ReplicationAction action,
@@ -102,7 +103,7 @@ public class AkamaiContentBuilder implements ContentBuilder {
 
     final String path = action.getPath();
 
-    final String domain = getDomain(action);
+    final String domain = getVerizonDomain(action);
 
     ResourceResolver resolver = null;
     PageManager pageManager = null;
@@ -136,16 +137,16 @@ public class AkamaiContentBuilder implements ContentBuilder {
         if (purgedPage != null) {
 
           String link = domain + resolver.map(path);
-          jsonArray.put(link + ".html");
+          jsonArray.put(link + ".*");
 
           if (slingSettingService.getRunModes().contains(AUTHOR_RUN_MODE)) {
             String authorLink = domain + path.replaceFirst("/content", "");
             if (!link.equalsIgnoreCase(authorLink))
-              jsonArray.put(authorLink + ".html");
+              jsonArray.put(authorLink + ".*");
           }
 
           if (!link.equalsIgnoreCase(domain + path))
-            jsonArray.put(domain + path + ".html");
+            jsonArray.put(domain + path + ".*");
 
           /*
            * Add page's vanity URL if it exists.
@@ -194,7 +195,7 @@ public class AkamaiContentBuilder implements ContentBuilder {
     Path tempFile;
 
     try {
-      tempFile = Files.createTempFile("akamai_purge_agent", ".tmp");
+      tempFile = Files.createTempFile("verizon_purge_agent", ".tmp");
     } catch (IOException e) {
       throw new ReplicationException("Could not create temporary file", e);
     }
@@ -208,12 +209,14 @@ public class AkamaiContentBuilder implements ContentBuilder {
     }
   }
 
-  private String getDomain(ReplicationAction action) {
+  private String getVerizonDomain(ReplicationAction action) {
     ValueMap agentConfig = action.getConfig().getProperties();
 
     String domain = PropertiesUtil.toString(agentConfig.get(PROPERTY_DOMAIN), "");
+    String accountDirectory = PropertiesUtil.toString(agentConfig.get(PROPERTY_ACCOUNT_DIRECTORY), "");
+    String cacheRoot = PropertiesUtil.toString(agentConfig.get(PROPERTY_CACHE_ROOT), "");
 
-    return String.format("%s", domain);
+    return String.format("%s/%s/%s", domain, accountDirectory, cacheRoot);
   }
 
   /**
