@@ -8,7 +8,8 @@ OSGi factory config CDNFlushRulesConfigImpl-xxxxx.
 ## Akamai purge agent
 
 ### Akamai API
-This agent is base on Akamai API document to create this bundle.
+This project is base on Akamai API document to create the bundle.
+
 https://developer.akamai.com/api/core_features/fast_purge/v3.html
 
 ### Test Connection
@@ -25,7 +26,8 @@ URI: URI should start with begin with akamai://
 ## Verizon purge agent
 
 ### Verizon API
-This agent is base on Verizon Rest API document to create this bundle.
+This project is base on Verizon Rest API document to create the bundle.
+
 https://docs.vdms.com/pdfs/VDMS_Web_Services_REST_API_Guide.pdf
 
 ### Test Connection
