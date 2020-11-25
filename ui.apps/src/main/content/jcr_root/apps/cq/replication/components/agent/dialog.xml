@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Dialog"
+    height="512"
+    title="Agent Settings">
+    <items jcr:primaryType="cq:WidgetCollection">
+        <tabs jcr:primaryType="cq:TabPanel">
+            <items jcr:primaryType="cq:WidgetCollection">
+                <tab1
+                    jcr:primaryType="cq:Widget"
+                    path="/libs/cq/replication/components/agent/tab_agent.infinity.json"
+                    xtype="cqinclude"/>
+                <tab2
+                    jcr:primaryType="cq:Widget"
+                    path="/libs/cq/replication/components/agent/tab_transport.infinity.json"
+                    xtype="cqinclude"/>
+                <tab3
+                    jcr:primaryType="cq:Widget"
+                    path="/libs/cq/replication/components/agent/tab_proxy.infinity.json"
+                    xtype="cqinclude"/>
+                <tab4
+                    jcr:primaryType="cq:Widget"
+                    path="/libs/cq/replication/components/agent/tab_extended.infinity.json"
+                    xtype="cqinclude"/>
+                <tab5
+                    jcr:primaryType="cq:Widget"
+                    path="/libs/cq/replication/components/agent/tab_triggers.infinity.json"
+                    xtype="cqinclude"/>
+                <tab6
+                    jcr:primaryType="cq:Widget"
+                    path="/libs/cq/replication/components/agent/tab_batch.infinity.json"
+                    xtype="cqinclude"/>
+                <tab7
+                  jcr:primaryType="cq:Widget"
+                  path="/apps/cq/replication/components/agent/tab_verizon.infinity.json"
+                  xtype="cqinclude"/>
+                <tab8
+                    jcr:primaryType="cq:Widget"
+                    path="/apps/cq/replication/components/agent/tab_akamai.infinity.json"
+                    xtype="cqinclude"/>
+            </items>
+        </tabs>
+    </items>
+</jcr:root>

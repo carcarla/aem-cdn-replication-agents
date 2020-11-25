@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Panel"
+    title="Verizon">
+    <items jcr:primaryType="cq:WidgetCollection">
+        <token
+          jcr:primaryType="cq:Widget"
+          fieldDescription="REST API Token for the Verizon credentials"
+          fieldLabel="REST API Token"
+          name="./transportToken"
+          xtype="password"/>
+        <domain
+            jcr:primaryType="cq:Widget"
+            fieldLabel="CDN cache domain"
+            name="./verizonDomain"
+            xtype="textfield"/>
+        <accountdir
+            jcr:primaryType="cq:Widget"
+            fieldLabel="Account directory"
+            name="./verizonAccountDir"
+            xtype="textfield"/>
+        <cacheroot
+            jcr:primaryType="cq:Widget"
+            fieldLabel="AEM Cache root"
+            name="./verizonCacheRoot"
+            xtype="textfield"/>
+    </items>
+</jcr:root>
