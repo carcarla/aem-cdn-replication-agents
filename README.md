@@ -1,9 +1,9 @@
 # AEM CDN replication agents
 
 This project is custom replication agents to flush Akamai and Verizon CDN cache with flush rules.
-OSGi factory config CDNFlushRulesConfigImpl-xxxxx.
+OSGi factory config com.carz.aem.cdn.replication.service.CDNFlushRulesConfigImpl-xxxxx.
 
-* Each agent suggested enable in one publisher only, which can control by create OSGi config (AkamaiContentBuilder.config or com.carz.aem.cdn.replication.verizon.VerizonContentBuilder.config) in different run mode.
+* Each agent suggested enable in one publisher only, which can control by create OSGi config (com.carz.aem.cdn.replication.akamai.AkamaiContentBuilder.config or com.carz.aem.cdn.replication.verizon.VerizonContentBuilder.config) in different run mode.
 
 ## Akamai purge agent
 
